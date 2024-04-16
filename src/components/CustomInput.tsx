@@ -15,16 +15,6 @@ type TInput = React.InputHTMLAttributes<HTMLInputElement> & {
 
 const CustomInput: React.FC<TInput> = ({ setValue, defaultInputValue, max, min, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const inputEvents = () => {
-    if (!inputRef.current || !inputRef.current.value.length) {
-      setValue('');
-      return;
-    }
-    const typing = inputRef.current.value;
-    setTimeout(() => {
-      if (typing === inputRef.current?.value) setValue(typing);
-    }, 400);
-  };
   const numberRangeLimit = () => {
     if (
       min &&
@@ -47,6 +37,17 @@ const CustomInput: React.FC<TInput> = ({ setValue, defaultInputValue, max, min, 
       return;
     }
   };
+  const inputEvents = () => {
+    if (!inputRef.current || !inputRef.current.value.length) {
+      setValue('');
+      return;
+    }
+    const typing = inputRef.current.value;
+    setTimeout(() => {
+      if (typing === inputRef.current?.value) setValue(typing);
+    }, 400);
+  };
+
   return (
     <input
       ref={inputRef}
@@ -58,4 +59,5 @@ const CustomInput: React.FC<TInput> = ({ setValue, defaultInputValue, max, min, 
   );
 };
 
-export default CustomInput;
+const MemorizeInput = React.memo(CustomInput);
+export default MemorizeInput;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import CustomInput from '@/components/CustomInput.tsx';
+import MemorizeInput from '@/components/CustomInput.tsx';
 
 export default function InputOpt() {
   const [nameInput, setNameInput] = useState<string>('');
@@ -30,7 +30,7 @@ export default function InputOpt() {
       </section>
       <section style={{ display: 'flex', justifyContent: 'space-around' }}>
         {inputLists.map((data) => (
-          <CustomInput
+          <MemorizeInput
             key={data.placeholder}
             type={data.type}
             setValue={data.setValue}
