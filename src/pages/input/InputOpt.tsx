@@ -17,8 +17,8 @@ export default function InputOpt() {
       placeholder: 'num fields',
       setValue: setNumInput,
       defaultInputValue: '0',
-      max: '5',
-      min: '-2',
+      max: 5,
+      min: -2,
     },
   ];
   return (

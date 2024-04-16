@@ -5,17 +5,20 @@ Input 컴포넌트를 선언적으로 사용하기
 3. ref
 4. ...
 * */
-import { Dispatch, SetStateAction, useRef } from 'react';
+import { Dispatch, SetStateAction, useCallback, useRef } from 'react';
 import * as React from 'react';
 
 type TInput = React.InputHTMLAttributes<HTMLInputElement> & {
   setValue: Dispatch<SetStateAction<string>>;
   defaultInputValue?: string;
+  min?: number;
+  max?: number;
 };
 
 const CustomInput: React.FC<TInput> = ({ setValue, defaultInputValue, max, min, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const numberRangeLimit = () => {
+
+  const numberRangeLimit = useCallback(() => {
     if (
       min &&
       inputRef.current &&
@@ -36,27 +39,21 @@ const CustomInput: React.FC<TInput> = ({ setValue, defaultInputValue, max, min, 
       setValue(max.toString());
       return;
     }
-  };
-  const inputEvents = () => {
+  }, [min, max, setValue]);
+  const inputEvents = useCallback(() => {
     if (!inputRef.current || !inputRef.current.value.length) {
       setValue('');
       return;
     }
+    if (rest.type === 'number') numberRangeLimit();
+
     const typing = inputRef.current.value;
     setTimeout(() => {
       if (typing === inputRef.current?.value) setValue(typing);
     }, 400);
-  };
+  }, [setValue, rest.type, numberRangeLimit]);
 
-  return (
-    <input
-      ref={inputRef}
-      defaultValue={defaultInputValue}
-      onKeyUp={inputEvents}
-      onBlur={numberRangeLimit}
-      {...rest}
-    />
-  );
+  return <input ref={inputRef} defaultValue={defaultInputValue} onInput={inputEvents} {...rest} />;
 };
 
 const MemorizeInput = React.memo(CustomInput);
