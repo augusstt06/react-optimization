@@ -8,6 +8,9 @@ export default function Home() {
         <button>
           <Link to='/input'>Input Component</Link>
         </button>
+        <button>
+          <Link to='/fetch'>API Fetch</Link>
+        </button>
       </section>
     </main>
   );

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import MemorizeInput from '@/components/CustomInput.tsx';
 
-export default function InputOpt() {
+const InputOpt = () => {
   const [nameInput, setNameInput] = useState<string>('');
   const [numInput, setNumInput] = useState<string>('0');
 
@@ -43,4 +43,5 @@ export default function InputOpt() {
       </section>
     </section>
   );
-}
+};
+export default InputOpt;
