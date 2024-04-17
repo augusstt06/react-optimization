@@ -1,24 +1,31 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Ttodo } from '@/pages/fetch/types';
 
 const VariableFetch = () => {
   console.log('VariableFetch Component is render!');
   const [isView, setIsView] = useState<boolean>(false);
+  const prevIsViewRef = React.useRef<boolean>(isView);
   const [todos, setTodos] = useState<Ttodo[]>([]);
-  const fetchData = useCallback(async () => {
-    try {
-      console.log('Data Fetching...');
-      const res = await fetch('https://jsonplaceholder.typicode.com/todos');
-      const data = await res.json();
-      console.log(data);
-      setTodos(data.slice(0, 5));
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
 
-  if (isView) void fetchData();
+  useEffect(() => {
+    if (!prevIsViewRef.current && isView) {
+      console.log('Data Fetching...');
+      const fetchData = async () => {
+        try {
+          const res = await fetch('https://jsonplaceholder.typicode.com/todos');
+          const data = (await res.json()).slice(0, 5);
+          console.log(data);
+          setTodos(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      void fetchData();
+    }
+    prevIsViewRef.current = isView;
+  }, [isView]);
+
   return (
     <section>
       <h3>Fetch Data when data changed</h3>

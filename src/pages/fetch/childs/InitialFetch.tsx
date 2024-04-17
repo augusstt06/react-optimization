@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Ttodo } from '@/pages/fetch/types';
 
@@ -6,19 +6,21 @@ const InitialFetch = () => {
   console.log('Initial Fetch Component is render!');
 
   const [todos, setTodos] = useState<Ttodo[]>([]);
-  const fetchData = async () => {
-    try {
-      const res = await fetch('https://jsonplaceholder.typicode.com/todos');
-      const data = (await res.json()).slice(0, 5);
-      setTodos(data);
-      return;
-    } catch (err) {
-      console.log(err);
-      return;
-    }
-  };
+  const prevTodos = useRef<Ttodo[]>(todos);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/todos');
+        const data = (await res.json()).slice(0, 5);
+        if (prevTodos.current !== data) setTodos(data);
+        return;
+      } catch (err) {
+        console.log(err);
+        return;
+      }
+    };
+
     void fetchData();
   }, []);
 
