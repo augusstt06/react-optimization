@@ -1,3 +1,7 @@
+/*
+부모 컴포넌트에서 input field 입력으로 인한 리렌더링이 발생하는데 현재 컴포넌트는 input 값과 무관하다.
+--> 따라서 React.memo 를 사용하여 컴포넌트를 memoization 하여 불필요한 리렌더링을 방지한다.
+* */
 import React from 'react';
 
 import { Ttodo } from '@/pages/fetch/types';
