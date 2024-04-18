@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
+import MemorizeInput from '@/components/CustomInput.tsx';
+import MappingComponent from '@/pages/fetch/childs/variableFetch/childs/Mapping.tsx';
 import { Ttodo } from '@/pages/fetch/types';
 
 const VariableFetch = () => {
   console.log('VariableFetch Component is render!');
   const [isView, setIsView] = useState<boolean>(false);
-  const prevIsViewRef = React.useRef<boolean>(isView);
+  const prevIsViewRef = useRef<boolean>(isView);
   const [todos, setTodos] = useState<Ttodo[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
     if (!prevIsViewRef.current && isView) {
@@ -25,19 +28,13 @@ const VariableFetch = () => {
     }
     prevIsViewRef.current = isView;
   }, [isView]);
-
   return (
     <section>
       <h3>Fetch Data when data changed</h3>
       <button onClick={() => setIsView(!isView)}>{isView ? 'Close View' : 'View Data'}</button>
-      {isView
-        ? todos.map((data) => (
-            <div key={data.id}>
-              <span>{data.title}</span>
-              <span>{data.completed ? '완료' : '미완료'}</span>
-            </div>
-          ))
-        : null}
+      {isView ? <MappingComponent todos={todos} /> : null}
+      <h3>{inputValue}</h3>
+      <MemorizeInput type='text' setValue={setInputValue} placeholder='write value' />
     </section>
   );
 };
