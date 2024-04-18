@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import MemorizeInput from '@/components/CustomInput.tsx';
 import MemorizeMapping from '@/pages/fetch/childs/variableFetch/childs/Mapping.tsx';
@@ -10,28 +10,6 @@ const VariableFetch = () => {
   const prevIsViewRef = useRef<boolean>(isView);
   const [todos, setTodos] = useState<Ttodo[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
-
-  // FIXME: useMemo를 사용하는것이 더 효율적인가?
-  const memoizedResponse = useMemo(() => {
-    let data: Ttodo[] = [];
-    if (!prevIsViewRef.current && isView) {
-      const fetchData = async () => {
-        try {
-          const res = await fetch('https://jsonplaceholder.typicode.com/todos');
-          data = (await res.json()).slice(0, 5);
-          console.log('try data', data);
-          return data;
-          // setTodos(data);
-        } catch (err) {
-          console.log(err);
-          data = [];
-          return data;
-        }
-      };
-      void fetchData();
-    } else return [];
-  }, [isView]);
-  console.log(memoizedResponse, '?');
 
   useEffect(() => {
     if (!prevIsViewRef.current && isView) {
