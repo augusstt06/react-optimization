@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Ttodo } from '@/pages/fetch/types';
 
 const MappingComponent = (props: { todos: Ttodo[] }) => {
@@ -14,4 +16,5 @@ const MappingComponent = (props: { todos: Ttodo[] }) => {
     </>
   );
 };
-export default MappingComponent;
+const MemorizeMapping = React.memo(MappingComponent);
+export default MemorizeMapping;

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import MemorizeInput from '@/components/CustomInput.tsx';
-import MappingComponent from '@/pages/fetch/childs/variableFetch/childs/Mapping.tsx';
+import MemorizeMapping from '@/pages/fetch/childs/variableFetch/childs/Mapping.tsx';
 import { Ttodo } from '@/pages/fetch/types';
 
 const VariableFetch = () => {
@@ -32,7 +32,7 @@ const VariableFetch = () => {
     <section>
       <h3>Fetch Data when data changed</h3>
       <button onClick={() => setIsView(!isView)}>{isView ? 'Close View' : 'View Data'}</button>
-      {isView ? <MappingComponent todos={todos} /> : null}
+      {isView ? <MemorizeMapping todos={todos} /> : null}
       <h3>{inputValue}</h3>
       <MemorizeInput type='text' setValue={setInputValue} placeholder='write value' />
     </section>
